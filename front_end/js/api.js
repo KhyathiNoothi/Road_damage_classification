@@ -7,7 +7,7 @@ const API_CONFIG = {
     USE_MOCK: false,
 
     // Backend endpoint URL
-   API_URL: 'http://127.0.0.1:8000/predict',
+   API_URL: 'https://road-damage-classification-5.onrender.com/predict',
 
     // Inference latency simulation in ms (for realistic UI loader feedback)
     MOCK_DELAY_MS: 900
