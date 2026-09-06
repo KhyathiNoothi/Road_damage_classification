@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road Damage Classification System | AI Powered Road Inspection</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Background Decoration Grid & Glowing Orbs -->
+    <div class="bg-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-road-barrier"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="brand-title">RoadVision<span class="highlight">AI</span></span>
+                    <span class="brand-sub">CNN Classification System</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="#classify" class="nav-link"><i class="fa-solid fa-camera-retro"></i> Classify Image</a>
+                <a href="#workflow" class="nav-link"><i class="fa-solid fa-diagram-project"></i> Workflow</a>
+                <a href="#model-info" class="nav-link"><i class="fa-solid fa-brain"></i> Model Info</a>
+                <a href="#backend" class="nav-link"><i class="fa-solid fa-code"></i> Integration</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#classify" class="btn btn-primary btn-sm">
+                    <span>Try Classifier</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- 1. HERO / HOME SECTION -->
+        <section id="home" class="hero-section">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="badge badge-accent">
+                        <i class="fa-solid fa-sparkles"></i> Deep Learning Computer Vision
+                    </div>
+                    <h1 class="hero-title">
+                        Road Damage <br>
+                        <span class="gradient-text">Classification System</span>
+                    </h1>
+                    <p class="hero-description">
+                        An intelligent automated inspection platform driven by a Convolutional Neural Network (CNN). 
+                        It accurately detects and categorizes road surface degradation into three critical classes: 
+                        <strong>Crack</strong>, <strong>Manhole</strong>, and <strong>Pothole</strong> to enable proactive road maintenance and improve public safety.
+                    </p>
+
+                    <div class="hero-cta-group">
+                        <a href="#classify" class="btn btn-primary btn-lg">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Get Started - Upload Image</span>
+                        </a>
+                        <a href="#workflow" class="btn btn-outline btn-lg">
+                            <i class="fa-solid fa-circle-play"></i>
+                            <span>Learn How It Works</span>
+                        </a>
+                    </div>
+
+                    <!-- Live Metrics Bar -->
+                    <div class="hero-metrics">
+                        <div class="metric-card">
+                            <span class="metric-val">3</span>
+                            <span class="metric-lbl">Target Classes (Crack, Manhole, Pothole)</span>
+                        </div>
+                        <div class="metric-divider"></div>
+                        <div class="metric-card">
+                            <span class="metric-val">CNN</span>
+                            <span class="metric-lbl">Feature Extractor</span>
+                        </div>
+                        <div class="metric-divider"></div>
+                        <div class="metric-card">
+                            <span class="metric-val">&lt; 50ms</span>
+                            <span class="metric-lbl">Inference Speed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Graphic -->
+                <div class="hero-visual">
+                    <div class="visual-card-stack">
+                        <div class="visual-card main-card">
+                            <div class="card-header-tag">
+                                <span class="dot live-dot"></span> AI Scanner Active
+                            </div>
+                            <div class="scanning-preview-box">
+                                <img src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=800&q=80" alt="Road Inspection Preview" class="hero-img">
+                                <div class="scanner-line"></div>
+                                <div class="bounding-box crack-box">
+                                    <span class="box-label"><i class="fa-solid fa-triangle-exclamation"></i> Pothole Detected 98.4%</span>
+                                </div>
+                            </div>
+                            <div class="visual-card-footer">
+                                <div class="class-pill pill-pothole"><i class="fa-solid fa-circle-exclamation"></i> Pothole</div>
+                                <div class="class-pill pill-crack"><i class="fa-solid fa-bolt"></i> Crack</div>
+                                <div class="class-pill pill-manhole"><i class="fa-solid fa-circle-dot"></i> Manhole</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. IMAGE CLASSIFICATION SECTION -->
+        <section id="classify" class="classify-section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge badge-primary">Interactive AI Portal</div>
+                    <h2 class="section-title">Road Image Classification</h2>
+                    <p class="section-subtitle">
+                        Upload a road surface image or select a sample image below to run the CNN model classification.
+                    </p>
+                </div>
+
+                <div class="classifier-layout">
+                    <!-- Left: Upload & Preview Card -->
+                    <div class="glass-card upload-card">
+                        <div class="card-title-bar">
+                            <h3><i class="fa-solid fa-image"></i> Input Image Selection</h3>
+                            <span class="status-indicator" id="inputStatus">Waiting for image</span>
+                        </div>
+
+                        <!-- Dropzone area -->
+                        <div class="dropzone" id="dropzone">
+                            <input type="file" id="fileInput" accept="image/png, image/jpeg, image/jpg, image/webp" hidden>
+                            <div class="dropzone-content" id="dropzonePrompt">
+                                <div class="upload-icon-wrapper">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                </div>
+                                <p class="dropzone-text">
+                                    <strong>Click to upload</strong> or drag &amp; drop road image
+                                </p>
+                                <span class="dropzone-hint">Supports PNG, JPG, JPEG, WEBP (Max 10MB)</span>
+                            </div>
+
+                            <!-- Live Image Preview Container -->
+                            <div class="image-preview-container hidden" id="previewContainer">
+                                <img id="imagePreview" src="" alt="Selected Road Image Preview">
+                                <button class="btn-remove-img" id="removeImgBtn" title="Remove image">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <div class="image-meta-bar" id="imageMetaBar">
+                                    <span id="fileNameDisplay">sample_image.jpg</span>
+                                    <span id="fileSizeDisplay">1.2 MB</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Sample Images Selector -->
+                        <div class="sample-preset-wrapper">
+                            <span class="sample-label"><i class="fa-solid fa-vial"></i> Or select a test sample image:</span>
+                            <div class="sample-grid">
+                                <button class="sample-btn" data-sample="crack" title="Test Crack Sample">
+                                    <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=150&q=80" alt="Crack Sample">
+                                    <span>Crack</span>
+                                </button>
+                                <button class="sample-btn" data-sample="manhole" title="Test Manhole Sample">
+                                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=150&q=80" alt="Manhole Sample">
+                                    <span>Manhole</span>
+                                </button>
+                                <button class="sample-btn" data-sample="pothole" title="Test Pothole Sample">
+                                    <img src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=150&q=80" alt="Pothole Sample">
+                                    <span>Pothole</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Classify Trigger Button -->
+                        <button class="btn btn-primary btn-block btn-classify" id="classifyBtn" disabled>
+                            <i class="fa-solid fa-microchip"></i>
+                            <span id="classifyBtnText">Classify Image</span>
+                            <div class="spinner hidden" id="btnSpinner"></div>
+                        </button>
+                    </div>
+
+                    <!-- Right: Prediction Result Display Area -->
+                    <div class="glass-card result-card">
+                        <div class="card-title-bar">
+                            <h3><i class="fa-solid fa-square-poll-vertical"></i> Classification Results</h3>
+                            <span class="badge badge-secondary" id="backendBadge"><i class="fa-solid fa-bolt"></i> Mock Inference Mode</span>
+                        </div>
+
+                        <!-- Empty State placeholder -->
+                        <div class="result-placeholder" id="resultPlaceholder">
+                            <div class="placeholder-icon">
+                                <i class="fa-solid fa-chart-pie"></i>
+                            </div>
+                            <h4>No Predictions Yet</h4>
+                            <p>Upload a road image or click one of the sample presets, then press <strong>Classify Image</strong> to view neural network predictions.</p>
+                        </div>
+
+                        <!-- Active Prediction Results Dashboard -->
+                        <div class="result-content hidden" id="resultContent">
+                            
+                            <!-- Top Predicted Class Card -->
+                            <div class="prediction-main-box" id="predictionMainBox">
+                                <div class="pred-header">
+                                    <span class="pred-label">Primary Classification</span>
+                                    <span class="pred-timestamp" id="predTimestamp">Just now</span>
+                                </div>
+                                <div class="pred-body">
+                                    <div class="pred-class-info">
+                                        <div class="class-icon-circle" id="predClassIcon">
+                                            <i class="fa-solid fa-triangle-exclamation"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="pred-class-name" id="predClassName">Pothole</h2>
+                                            <span class="pred-status-tag" id="predStatusTag">Severe Defect</span>
+                                        </div>
+                                    </div>
+                                    <div class="confidence-gauge">
+                                        <div class="gauge-value" id="predConfidenceVal">96.8%</div>
+                                        <div class="gauge-label">Confidence</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Separate Probabilities Breakdown -->
+                            <div class="probabilities-section">
+                                <h4 class="prob-section-title">Class Probability Breakdown</h4>
+
+                                <!-- Class Bars -->
+                                <div class="prob-bars-container">
+                                    <!-- Crack -->
+                                    <div class="prob-row">
+                                        <div class="prob-meta">
+                                            <span class="prob-name"><i class="fa-solid fa-bolt text-crack"></i> Crack</span>
+                                            <span class="prob-pct" id="crackPct">0.0%</span>
+                                        </div>
+                                        <div class="prob-track">
+                                            <div class="prob-fill fill-crack" id="crackBar" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Manhole -->
+                                    <div class="prob-row">
+                                        <div class="prob-meta">
+                                            <span class="prob-name"><i class="fa-solid fa-circle-dot text-manhole"></i> Manhole</span>
+                                            <span class="prob-pct" id="manholePct">0.0%</span>
+                                        </div>
+                                        <div class="prob-track">
+                                            <div class="prob-fill fill-manhole" id="manholeBar" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pothole -->
+                                    <div class="prob-row">
+                                        <div class="prob-meta">
+                                            <span class="prob-name"><i class="fa-solid fa-circle-exclamation text-pothole"></i> Pothole</span>
+                                            <span class="prob-pct" id="potholePct">0.0%</span>
+                                        </div>
+                                        <div class="prob-track">
+                                            <div class="prob-fill fill-pothole" id="potholeBar" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Probability Chart Visualization -->
+                                <div class="chart-wrapper">
+                                    <canvas id="probabilityChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Diagnostic Advice & Action Card -->
+                            <div class="advice-card" id="adviceCard">
+                                <div class="advice-header">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                    <span id="adviceTitle">Action Recommended</span>
+                                </div>
+                                <p class="advice-text" id="adviceText">
+                                    Pothole detected with high confidence. Immediate patch work required to prevent vehicle structural damage and safety risks.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. ABOUT PROJECT SECTION -->
+        <section id="workflow" class="workflow-section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge badge-accent">System Architecture</div>
+                    <h2 class="section-title">About The Project Workflow</h2>
+                    <p class="section-subtitle">
+                        How our computer vision pipeline transforms raw road surface photographs into actionable infrastructure intelligence.
+                    </p>
+                </div>
+
+                <!-- Workflow Pipeline Flowchart -->
+                <div class="workflow-timeline">
+                    <!-- Step 1 -->
+                    <div class="step-card">
+                        <div class="step-number">01</div>
+                        <div class="step-icon">
+                            <i class="fa-solid fa-file-arrow-up"></i>
+                        </div>
+                        <h3>Image Upload</h3>
+                        <p>User uploads a high-resolution photograph of the road surface captured via smartphone, mobile camera, or drone camera.</p>
+                    </div>
+
+                    <div class="timeline-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+                    <!-- Step 2 -->
+                    <div class="step-card">
+                        <div class="step-number">02</div>
+                        <div class="step-icon">
+                            <i class="fa-solid fa-sliders"></i>
+                        </div>
+                        <h3>Preprocessing</h3>
+                        <p>Image is resized (e.g. 224x224 RGB), normalized in tensor scale [0,1], and adjusted for optimum lighting and contrast balance.</p>
+                    </div>
+
+                    <div class="timeline-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+                    <!-- Step 3 -->
+                    <div class="step-card">
+                        <div class="step-number">03</div>
+                        <div class="step-icon">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <h3>CNN Feature Extractor</h3>
+                        <p>Deep Convolutional layers scan image features using kernels to extract edge patterns, surface textures, and structural shapes.</p>
+                    </div>
+
+                    <div class="timeline-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+                    <!-- Step 4 -->
+                    <div class="step-card">
+                        <div class="step-number">04</div>
+                        <div class="step-icon">
+                            <i class="fa-solid fa-square-check"></i>
+                        </div>
+                        <h3>Classification Result</h3>
+                        <p>Dense Softmax layer computes exact probabilities for Crack, Manhole, and Pothole, displaying confidence metrics.</p>
+                    </div>
+                </div>
+
+                <!-- Class Breakdown Grid -->
+                <div class="class-info-container">
+                    <h3 class="sub-section-title text-center">Target Road Feature Classes</h3>
+                    <div class="grid grid-3">
+                        <!-- Crack Card -->
+                        <div class="glass-card class-detail-card card-crack">
+                            <div class="class-card-header">
+                                <div class="class-icon"><i class="fa-solid fa-bolt"></i></div>
+                                <div>
+                                    <h4>1. Crack</h4>
+                                    <span class="class-tag">Surface Fissure</span>
+                                </div>
+                            </div>
+                            <p class="class-desc">
+                                Linear or block fracture patterns on asphalt or concrete pavement caused by moisture intrusion, temperature fluctuation, heavy axle loads, or aging binder material.
+                            </p>
+                            <ul class="class-features">
+                                <li><i class="fa-solid fa-check"></i> Longitudinal &amp; Transverse cracking</li>
+                                <li><i class="fa-solid fa-check"></i> Early indicator of structural degradation</li>
+                                <li><i class="fa-solid fa-check"></i> Preventative sealing recommended</li>
+                            </ul>
+                        </div>
+
+                        <!-- Manhole Card -->
+                        <div class="glass-card class-detail-card card-manhole">
+                            <div class="class-card-header">
+                                <div class="class-icon"><i class="fa-solid fa-circle-dot"></i></div>
+                                <div>
+                                    <h4>2. Manhole</h4>
+                                    <span class="class-tag">Utility Fixture</span>
+                                </div>
+                            </div>
+                            <p class="class-desc">
+                                Utility access covers integrated into the road surface. Classified to distinguish standard municipal infrastructure covers from hazardous road damage or uneven rim heights.
+                            </p>
+                            <ul class="class-features">
+                                <li><i class="fa-solid fa-check"></i> Circular or rectangular iron frames</li>
+                                <li><i class="fa-solid fa-check"></i> Normal road infrastructure object</li>
+                                <li><i class="fa-solid fa-check"></i> Monitors rim alignment elevation</li>
+                            </ul>
+                        </div>
+
+                        <!-- Pothole Card -->
+                        <div class="glass-card class-detail-card card-pothole">
+                            <div class="class-card-header">
+                                <div class="class-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+                                <div>
+                                    <h4>3. Pothole</h4>
+                                    <span class="class-tag">Critical Hazard</span>
+                                </div>
+                            </div>
+                            <p class="class-desc">
+                                Bowl-shaped depressions in road pavement resulting from water weakening the soil subbase under traffic forces, leaving hollow pockets that collapse.
+                            </p>
+                            <ul class="class-features">
+                                <li><i class="fa-solid fa-check"></i> Severe hazard to tires and suspension</li>
+                                <li><i class="fa-solid fa-check"></i> Requires immediate cold/hot asphalt patch</li>
+                                <li><i class="fa-solid fa-check"></i> High priority maintenance alert</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. MODEL INFORMATION SECTION -->
+        <section id="model-info" class="model-info-section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge badge-primary">Deep Learning Fundamentals</div>
+                    <h2 class="section-title">CNN Model Mechanics</h2>
+                    <p class="section-subtitle">
+                        Understanding how Convolutional Neural Networks process visual inputs layer-by-layer to detect road damage.
+                    </p>
+                </div>
+
+                <div class="grid grid-2 model-grid">
+                    <!-- Concept 1: Convolution -->
+                    <div class="glass-card cnn-concept-card">
+                        <div class="concept-badge">Layer 1</div>
+                        <div class="concept-icon"><i class="fa-solid fa-border-all"></i></div>
+                        <h3>1. Convolution (Kernel Filters)</h3>
+                        <p>
+                            Small matrices called <strong>kernels or filters</strong> slide across the input image pixels. 
+                            Performing element-wise multiplication extracts mathematical feature maps representing sharp edges, asphalt textures, and cracks.
+                        </p>
+                        <div class="concept-footer">
+                            <span class="tech-tag"><i class="fa-solid fa-layer-group"></i> Feature Map Generation</span>
+                        </div>
+                    </div>
+
+                    <!-- Concept 2: Pooling -->
+                    <div class="glass-card cnn-concept-card">
+                        <div class="concept-badge">Layer 2</div>
+                        <div class="concept-icon"><i class="fa-solid fa-compress"></i></div>
+                        <h3>2. Pooling (Dimensionality Reduction)</h3>
+                        <p>
+                            <strong>Max Pooling</strong> reduces spatial dimensions (width and height) of feature maps while retaining dominant features. 
+                            This reduces computation cost, speeds up training, and achieves spatial translation invariance.
+                        </p>
+                        <div class="concept-footer">
+                            <span class="tech-tag"><i class="fa-solid fa-down-left-and-up-right-to-center"></i> Max Pooling 2x2</span>
+                        </div>
+                    </div>
+
+                    <!-- Concept 3: Feature Extraction -->
+                    <div class="glass-card cnn-concept-card">
+                        <div class="concept-badge">Layer 3</div>
+                        <div class="concept-icon"><i class="fa-solid fa-eye"></i></div>
+                        <h3>3. Hierarchical Feature Extraction</h3>
+                        <p>
+                            Deep stacked layers build a hierarchy: early layers learn low-level primitives (lines, curves), middle layers combine them into shapes (fissure lines, rim circles), and deeper layers recognize complex road defect structures.
+                        </p>
+                        <div class="concept-footer">
+                            <span class="tech-tag"><i class="fa-solid fa-diagram-nested"></i> Deep Representations</span>
+                        </div>
+                    </div>
+
+                    <!-- Concept 4: Classification -->
+                    <div class="glass-card cnn-concept-card">
+                        <div class="concept-badge">Layer 4</div>
+                        <div class="concept-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <h3>4. Fully Connected &amp; Softmax</h3>
+                        <p>
+                            Extracted 2D feature maps are flattened into a 1D vector and passed to Dense layers. The final <strong>Softmax activation function</strong> outputs a normalized probability distribution summing to 1.0 (100%) across Crack, Manhole, and Pothole.
+                        </p>
+                        <div class="concept-footer">
+                            <span class="tech-tag"><i class="fa-solid fa-percent"></i> Softmax Probability Output</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Architecture Box -->
+                <div class="glass-card cnn-arch-box text-center">
+                    <h3><i class="fa-solid fa-cubes"></i> End-to-End Pipeline Summary</h3>
+                    <div class="pipeline-flow">
+                        <div class="pipe-node">Input (224x224x3)</div>
+                        <div class="pipe-sep"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="pipe-node">Conv2D + ReLU</div>
+                        <div class="pipe-sep"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="pipe-node">MaxPooling2D</div>
+                        <div class="pipe-sep"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="pipe-node">Flatten &amp; Dense</div>
+                        <div class="pipe-sep"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="pipe-node highlight-node">Softmax (3 Classes)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. BACKEND INTEGRATION GUIDE SECTION -->
+        <section id="backend" class="backend-section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <div class="badge badge-accent">Developer Setup</div>
+                    <h2 class="section-title">Backend Connection Guide</h2>
+                    <p class="section-subtitle">
+                        Connect your trained TensorFlow/Keras Python model in seconds via Flask or FastAPI.
+                    </p>
+                </div>
+
+                <div class="glass-card backend-card">
+                    <div class="backend-steps-grid">
+                        <div class="backend-info">
+                            <h3><i class="fa-solid fa-plug"></i> How To Connect Your Python Model</h3>
+                            <p>
+                                The frontend is decoupled and ready for production API endpoints. Currently, it runs in <strong>Mock Mode</strong>. To connect your custom trained `.h5` or `.keras` model:
+                            </p>
+                            <ol class="integration-list">
+                                <li>
+                                    <strong>Step 1:</strong> Run your Python backend (<code class="code-inline">flask_app.py</code> or <code class="code-inline">fastapi_app.py</code> provided in the codebase).
+                                </li>
+                                <li>
+                                    <strong>Step 2:</strong> Open <code class="code-inline">js/api.js</code> in your project.
+                                </li>
+                                <li>
+                                    <strong>Step 3:</strong> Change <code class="code-inline">USE_MOCK: true</code> to <code class="code-inline">false</code>:
+                                </li>
+                            </ol>
+
+                            <div class="code-block-wrapper">
+                                <div class="code-header">js/api.js Configuration</div>
+                                <pre class="code-snippet"><code>const API_CONFIG = {
+    // Set to false to send requests to Python Backend
+    USE_MOCK: false,
+    API_URL: 'http://127.0.0.1:5000/predict'
+};</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="backend-code-preview">
+                            <div class="code-header">
+                                <span><i class="fa-brands fa-python"></i> backend_examples/flask_app.py</span>
+                                <span class="badge badge-sm">Python Backend Reference</span>
+                            </div>
+                            <pre class="code-snippet Python-snippet"><code>from flask import Flask, request, jsonify
+from flask_cors import CORS
+import tensorflow as tf
+import numpy as np
+from PIL import Image
+
+app = Flask(__name__)
+CORS(app) # Enable CORS for frontend requests
+
+# Load your trained CNN model
+model = tf.keras.models.load_model('road_damage_cnn.h5')
+CLASSES = ['Crack', 'Manhole', 'Pothole']
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    file = request.files['image']
+    img = Image.open(file.stream).convert('RGB').resize((224, 224))
+    img_array = np.array(img) / 255.0
+    img_tensor = np.expand_dims(img_array, axis=0)
+    
+    preds = model.predict(img_tensor)[0]
+    top_idx = int(np.argmax(preds))
+    
+    return jsonify({
+        'class': CLASSES[top_idx],
+        'confidence': float(preds[top_idx]),
+        'probabilities': {
+            'Crack': float(preds[0]),
+            'Manhole': float(preds[1]),
+            'Pothole': float(preds[2])
+        }
+    })
+
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="#home" class="nav-logo">
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-road-barrier"></i>
+                    </div>
+                    <span class="brand-title">RoadVision<span class="highlight">AI</span></span>
+                </a>
+                <p>CNN-Based Road Damage Classification Project for Academic &amp; Research Demonstrations.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Navigation</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#classify">Classifier</a></li>
+                    <li><a href="#workflow">Workflow</a></li>
+                    <li><a href="#model-info">Model Info</a></li>
+                    <li><a href="#backend">Backend Guide</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-tags">
+                <h4>Technologies</h4>
+                <div class="tech-badges">
+                    <span class="badge">Python</span>
+                    <span class="badge">TensorFlow / Keras</span>
+                    <span class="badge">CNN Architecture</span>
+                    <span class="badge">Chart.js</span>
+                    <span class="badge">HTML5 / CSS3 / JS</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container text-center">
+                <p>&copy; 2026 Road Damage Classification System. Built for Final-Year Engineering Project Demonstration.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
