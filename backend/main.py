@@ -23,7 +23,7 @@ from tensorflow.keras.models import load_model
 # Configuration
 # ---------------------------------------------------------------------
 
-MODEL_PATH = "model.keras"          # path to your saved .keras model
+MODEL_PATH = "model (1).keras"          # path to your saved .keras model
 IMAGE_SIZE = (224, 224)             # must match training input size
 CLASS_NAMES = ["Crack", "Manhole", "Pothole"]  # must match training class order
 
