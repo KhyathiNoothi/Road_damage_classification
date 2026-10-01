@@ -8,10 +8,10 @@ A deep learning-based web application for **classifying road damage from images*
 
 ### 🛣️ Road Damage Classification
 
-- Upload an image of a road.
-- Process the image through the deep learning pipeline.
-- Classify the road image based on learned visual patterns.
-- Display the predicted road-damage category.
+- Upload an image of a road
+- Process the image through the deep learning pipeline
+- Classify the road image based on learned visual patterns
+- Display the predicted road-damage category
 
 ### 🧠 Deep Learning
 
