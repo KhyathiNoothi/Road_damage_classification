@@ -15,10 +15,10 @@ A deep learning-based web application for **classifying road damage from images*
 
 ### 🧠 Deep Learning
 
-- Image-based deep learning classification.
-- Image preprocessing before prediction.
-- Model training and evaluation.
-- Prediction on new road images.
+- Image-based deep learning classification
+- Image preprocessing before prediction
+- Model training and evaluation
+- Prediction on new road images
 
 ### 🌐 Web Application
 
