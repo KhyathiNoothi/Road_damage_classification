@@ -1,15 +1,4 @@
-"""
-FastAPI backend for Road Damage Classification.
 
-Loads a trained Keras CNN model (Crack / Manhole / Pothole) and exposes
-a single endpoint that accepts an uploaded image and returns the
-predicted class and per-class probabilities.
-
-IMPORTANT: The model already contains a Rescaling(1./255) layer as its
-first layer, so this backend feeds RAW pixel values (0-255) into the
-model. Do NOT divide by 255 here — that would normalize twice and break
-predictions.
-"""
 
 import io
 
