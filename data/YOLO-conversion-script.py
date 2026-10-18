@@ -8,9 +8,7 @@ labels_dir = "labels"          # directory with txt polygons
 yolo_dir = "labels-YOLO"      # directory with standard YOLO txt format
 os.makedirs(yolo_dir, exist_ok=True)
 
-# ------------------------------
-# Conversion Function
-# ------------------------------
+
 def polygon_to_yolo(coords):
     """
     coords: lista di 8 float [x1,y1,x2,y2,x3,y3,x4,y4], normalizzati [0,1]
