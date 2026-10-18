@@ -297,8 +297,4 @@ The project combines **deep learning, image classification, backend integration,
 
 ---
 
-# 👩‍💻 Author
 
-**Khyathi Noothi**
-
-GitHub: [@KhyathiNoothi](https://github.com/KhyathiNoothi)
